@@ -13,6 +13,14 @@
       <h1>
         <a href="/">BLEACHERS</a>
       </h1>
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" >
+          SELECT YOUR SPORT
+      </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Soccer</a>
+          <a class="dropdown-item" href="#">Basketball</a>
+          <a class="dropdown-item" href="#">Football</a>
+        </div>
       <nav>
         {{#if logged_in}}
         <h3>{{name}}</h3> |
@@ -31,7 +39,7 @@
   </div>
 
   {{#if logged_in}}
-  <script src="/js/logout.js"></script>
+  <script src="/public/js/logout.js"></script>
   {{/if}}
 </body>
 </html>

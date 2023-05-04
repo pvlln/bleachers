@@ -41,8 +41,8 @@ io.on('connection', (socket) => {
 
 
   // Receive messages and send them only to users in the same room
-  socket.on('message', (data) => {
-    io.to(data.room).emit('message', { message: data.message, room: data.room });
+  socket.on('message', (data, room) => {
+    io.to(room).emit('message', data, room);
   });
 
 });
