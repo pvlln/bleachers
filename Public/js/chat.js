@@ -7,6 +7,7 @@ socket.on('connect', () => {
     console.log(socket.id);
 });
 //listening for message from server
+
 //listening for message from server
 socket.on('message', (data, room) => {
     if (room === currentRoom) {
@@ -19,6 +20,7 @@ socket.on('message', (data, room) => {
 //sends message to html
 const sendMessage = () => {
     const message = document.getElementById('name').value;
+
     socket.emit('message', message, currentRoom);
 };
 
@@ -40,6 +42,7 @@ socket.on('user-disconnected', (user) => {
 
 // Store the current room name
 let currentRoom = null;
+
 
 // Join room
 const joinRoom = (roomName) => {
@@ -69,4 +72,4 @@ roomLinks.forEach((link) => {
 
 
 
-document.getElementById('submit').addEventListener('click', sendMessage);
+

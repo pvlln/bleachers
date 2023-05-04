@@ -39,12 +39,13 @@ io.on('connection', (socket) => {
     io.emit('user-disconnected', socket.id);
   });
 
+
   // Receive messages and send them only to users in the same room
   socket.on('message', (data, room) => {
     io.to(room).emit('message', data, room);
   });
-});
 
+});
 http.listen(port, () => {
   console.log('Server is listening on', port);
 });
