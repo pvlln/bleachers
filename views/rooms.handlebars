@@ -1,22 +1,26 @@
-<row class="main">
-    <div class="col-4">
+<row class="row main mt-5">
+    <div class="col-3">
         <row>
-            <ul class="rooms">
+            <ul class="rooms nav flex-column">
+                <li class="room nav-item" id="{{room.id}}">
+                    <h2>Active rooms</h2>
+                </li>
             {{#each rooms as |room| }}
-                <li class="room" id="{{room.id}}">
-                   <a {{!-- href="/chatroom/{{room_id}}"--}}>{{room.name}}</a>
+                <li class="room nav-item" id="{{room.id}}">
+                    {{!-- QUESTION --}}
+                   <a class="nav-link" href="/chatroom/{{room_id}}">{{room.name}}</a>
                 </li>
             {{/each}}
         </ul>
         </row>
-        <row>
+        <row class="pt-4">
             <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" placeholder="Room name">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Create</button>
+                <input class="form-control" placeholder="Room name">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add room</button>
+            </form>
         </row>
-    </form>
     </div>
-    <div class="main-container">
+    <div class="col-7 mx-1 room">
         <row class="sport-title">
             <h3>{{sport.name}}</h3>
         </row>
