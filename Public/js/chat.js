@@ -20,9 +20,9 @@ socket.on('message', (data, room) => {
 //sends message to html
 const sendMessage = () => {
     const message = document.getElementById('name').value;
-
-    socket.emit('message', message, currentRoom);
+    socket.emit('message', { message: message, room: currentRoom });
 };
+
 
 //Logs whoever joined server
 socket.on('new-user', (user) => {
@@ -69,6 +69,7 @@ roomLinks.forEach((link) => {
   });
 });
 
+document.getElementById('submit').addEventListener('click', sendMessage);
 
 
 
