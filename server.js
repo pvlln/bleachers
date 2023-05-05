@@ -41,9 +41,10 @@ io.on('connection', (socket) => {
 
 
   // Receive messages and send them only to users in the same room
-  socket.on('message', (data, room) => {
-    io.to(room).emit('message', data, room);
-  });
+  socket.on('message', (data) => {
+    io.to(data.room).emit('message', data.message, data.room);
+});
+
 
 });
 http.listen(port, () => {
