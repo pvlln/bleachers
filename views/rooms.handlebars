@@ -8,7 +8,7 @@
             {{#each rooms as |room| }}
                 <li class="room nav-item" id="{{room.id}}">
                     {{!-- QUESTION --}}
-                   <a class="nav-link" href="/chatroom/{{room_id}}">{{room.name}}</a>
+                   <a class="nav-link" href="/chatroom/{{room.id}}">{{room.name}}</a>
                 </li>
             {{/each}}
         </ul>
@@ -29,6 +29,7 @@
         </row>
         <row class="chatbox">
             {{body}}
+            {{!-- google partial --}}
         </row>
     </div>
 </row>
