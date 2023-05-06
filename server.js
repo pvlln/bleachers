@@ -1,10 +1,16 @@
+const User = require('./models/users');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
-
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const mysql = require('mysql2/promise');
+const env= require('dotenv').config();
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 const exphbs = require('express-handlebars');
@@ -14,29 +20,63 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-//login route
-app.get('/', function (req, res) {
-  res.render('login');
+//handles user registration
+app.post('/api/users', async (req, res) => {
+  try {
+    const { nickname, password } = req.body;
+
+    // Create a new user using the User model
+    const newUser = await User.create({ nickname, password });
+
+    res.json({ success: true, message: 'User registration successful.' });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: 'User registration failed.' });
+  }
 });
 
+// redirect to signup page
+app.get('/', (req, res) => {
+  res.redirect('/signup');
+});
 // signup route
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
-
+// login route
+app.get('/login', (req, res) => {
+  res.render('login');
+});
 // chat route
 app.get('/chat', (req, res) => {
-  res.render('chatroom');
+  res.render('chatroom', {
+    room: { name: 'Sample Room' },
+    message: { sender: 'User', content: 'Welcome to the chatroom!' },
+  });
 });
 
 
-// make this a real login route
-app.post('/api/users/login', (req, res) => res.send('hello'))
+//signup route
 
-// Serving the html in views
-app.get('/', (req, res) => {
-  res.render('index');
+// login route
+
+app.post('/api/users/login', async (req, res) => {
+  try {
+    const { nickname, password } = req.body;
+    const user = await User.findOne({ where: { nickname } });
+
+    if (user && user.checkPassword(password)) {
+     
+      res.json({ success: true, message: 'Login successful.' });
+    } else {
+      res.json({ success: false, message: 'Invalid nickname or password.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: 'Login failed.' });
+  }
 });
+
 
 io.on('connection', (socket) => {
   console.log('User has Connected' + socket.id);
@@ -69,6 +109,7 @@ io.on('connection', (socket) => {
     io.to(data.room).emit('message', data.message, data.room);
   });
 });
+
 http.listen(port, () => {
   console.log('Server is listening on', port);
 });
