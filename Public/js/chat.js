@@ -62,11 +62,11 @@ const joinRoom = (roomName) => {
 // Add event listeners to room links
 const roomLinks = document.querySelectorAll('.room-link');
 roomLinks.forEach((link) => {
-  link.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent the default link behavior
-    const roomName = event.target.getAttribute('data-room-name');
-    joinRoom(roomName);
-  });
+    link.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent the default link behavior
+        const roomName = event.target.getAttribute('data-room-name');
+        joinRoom(roomName);
+    });
 });
 
 document.getElementById('submit').addEventListener('click', sendMessage);

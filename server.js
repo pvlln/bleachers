@@ -6,12 +6,36 @@ const path = require('path');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-// Serving the static folders in public
-app.use('/js', express.static(path.join(__dirname, 'public', 'js')));
+
+const exphbs = require('express-handlebars');
+//serving handlebars  
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+//login route
+app.get('/', function (req, res) {
+  res.render('login');
+});
+
+// signup route
+app.get('/signup', (req, res) => {
+  res.render('signup');
+});
+
+// chat route
+app.get('/chat', (req, res) => {
+  res.render('chatroom');
+});
+
+
+// make this a real login route
+app.post('/api/users/login', (req, res) => res.send('hello'))
 
 // Serving the html in views
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+  res.render('index');
 });
 
 io.on('connection', (socket) => {
@@ -43,9 +67,7 @@ io.on('connection', (socket) => {
   // Receive messages and send them only to users in the same room
   socket.on('message', (data) => {
     io.to(data.room).emit('message', data.message, data.room);
-});
-
-
+  });
 });
 http.listen(port, () => {
   console.log('Server is listening on', port);
