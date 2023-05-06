@@ -1,23 +1,23 @@
 <row class="chatbox-title">
-  <h3>{{room.name}}</h3>
+    <h3>{{room.name}}</h3>
 </row>
 <row class="align-items-end">
-  {{! Messages received: }}
-  <div class="alert alert-success message reveived d-flex">
-    <p>{{message.sender}}: </p>
-    <p> {{message}}</p>
-  </div>
-  {{! Messages sent: }}
-  <div class="alert alert-info message sent justify-content-end d-flex">
-    <p>You: </p>
-    <p> {{message}}</p>
-  </div>
-</row>
-<row class="align-items-end">
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Enter message here" />
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Send</button>
+    {{!-- Messages received: --}}
+    <div class="alert alert-success message reveived d-flex">
+        <p>{{message.sender}}: </p>
+        <p> {{message}}</p>
     </div>
-  </div>
+    {{!-- Messages sent: --}}
+    <div class="alert alert-info message sent justify-content-end d-flex">
+        <p>You: </p>
+        <p> {{message}}</p>
+    </div>
+</row>
+<row class="align-items-end">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Enter message here">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Send</button>
+        </div>
+    </div>
 </row>
