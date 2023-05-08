@@ -1,76 +1,57 @@
-//For button:
-var input = document.getElementById("name");
-//For chat:
-const socket = io();
+const socket = io("http://localhost:3000");
 
-socket.on('connect', () => {
-    console.log(socket.id);
-});
-//listening for message from server
+const messagesContainer = document.getElementById("messages");
+const submit = document.getElementById("submit");
 
-//listening for message from server
-socket.on('message', (data, room) => {
-    if (room === currentRoom) {
-        const messageDiv = document.createElement('div');
-        messageDiv.textContent = data;
-        document.getElementById('chat').appendChild(messageDiv);
-    }
-});
+function createMessageElement(sender, text, isReceived) {
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add(
+    "alert",
+    isReceived ? "alert-success" : "alert-info",
+    "message",
+    isReceived ? "received" : "sent",
+    "d-flex"
+  );
 
-//sends message to html
-const sendMessage = () => {
-    const message = document.getElementById('name').value;
-    socket.emit('message', { message: message, room: currentRoom });
-};
+  //gets nickname from db
+  async function getNickname(userId) {
+    const response = await fetch(`/api/getNickname/${userId}`);
+    const data = await response.json();
+    return data.nickname;
+  }
+  
 
+  const senderP = document.createElement("p");
+  senderP.textContent = isReceived ? `${sender}:` : "Me: ";
+  messageDiv.appendChild(senderP);
 
-//Logs whoever joined server
-socket.on('new-user', (user) => {
-    const usersContainer = document.getElementById('users-container');
-    const newUserDiv = document.createElement('div');
-    newUserDiv.textContent = user;
-    newUserDiv.id = user;
-    usersContainer.appendChild(newUserDiv);
-});
+  const textP = document.createElement("p");
+  textP.textContent = text;
+  messageDiv.appendChild(textP);
 
-socket.on('user-disconnected', (user) => {
-    const userDiv = document.getElementById(user);
-    if (userDiv) {
-        userDiv.remove();
-    }
-});
+  return messageDiv;
+}
 
-// Store the current room name
-let currentRoom = null;
+submit.addEventListener("click", () => {
+    const input = document.querySelector(".form-control");
+    const message = input.value;
+  
+    input.value = "";
+  
+    // Emit the 'message' event to the server with the message data
+    socket.emit("message", { sender: socket.id, text: message });
+  
+    const messageElement = createMessageElement("ME: ", message, false);
+    messagesContainer.appendChild(messageElement);
+  });
+  
 
-
-// Join room
-const joinRoom = (roomName) => {
-    // If the user is already in a room, leave that room first
-    if (currentRoom) {
-        socket.emit('leave-room', currentRoom);
-    }
-
-    // Join the new room
-    socket.emit('join-room', roomName);
-
-    // Update the current room
-    currentRoom = roomName;
-};
-
-// Add event listeners to room links
-// Add event listeners to room links
-const roomLinks = document.querySelectorAll('.room-link');
-roomLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent the default link behavior
-        const roomName = event.target.getAttribute('data-room-name');
-        joinRoom(roomName);
-    });
+socket.on("connect", () => {
+  console.log("Connected to server");
 });
 
-document.getElementById('submit').addEventListener('click', sendMessage);
-
-
-
-
+socket.on("message", (data) => {
+  const { sender, text } = data;
+  const messageElement = createMessageElement(sender, text, true);
+  messagesContainer.appendChild(messageElement);
+});
