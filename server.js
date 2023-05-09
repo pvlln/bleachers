@@ -8,6 +8,7 @@ const io = require('socket.io')(http);
 const mysql = require('mysql2/promise');
 const env = require('dotenv').config();
 const session = require('express-session');
+const sequelize = require('./config/connection');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -74,7 +75,7 @@ app.get('/login', (req, res) => {
 });
 // chat route
 app.get('/chat', isAuthenticated, (req, res) => {
-  res.render('chatroom', {});
+  res.render('rooms', {});
 });
 
 // login route
