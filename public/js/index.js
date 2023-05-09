@@ -1,4 +1,6 @@
 // Create rooms functionality
+const room_names = [];
+
 async function create(e){
     e.preventDefault();
     var room_name = document.querySelector('#room-name').value;
@@ -10,6 +12,7 @@ async function create(e){
 
     var rooms_div = document.querySelector('#rooms-div');
     rooms_div.innerHTML = btn;
+    room_names.push(room_name);
 }
 
 document.querySelector('.create-form').addEventListener('submit', create);
