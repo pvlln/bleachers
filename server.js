@@ -62,21 +62,24 @@ app.post('/api/users', async (req, res) => {
 
 
 // redirect to signup page
-app.get('/', (req, res) => {
-  res.redirect('/signup');
+app.get('/signup', (req, res) => {
+  res.render('signup', { logged_in: req.session.nickname ? true : false });
 });
+
 // signup route
 app.get('/signup', (req, res) => {
   res.render('signup');
 });
 // login route
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { logged_in: req.session.nickname ? true : false });
 });
+
 // chat route
 app.get('/chat', isAuthenticated, (req, res) => {
-  res.render('rooms', {});
+  res.render('rooms', { logged_in: true, name: req.session.nickname });
 });
+
 
 // login route
 app.post('/api/users/login', async (req, res) => {
