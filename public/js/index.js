@@ -16,3 +16,7 @@ async function create(e){
 }
 
 document.querySelector('.create-form').addEventListener('submit', create);
+
+// Collapse bootstrap functionality
+
+$('.collapse').collapse()
