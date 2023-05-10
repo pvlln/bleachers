@@ -33,7 +33,7 @@
           </ul>
           <span class="navbar-text">
             {{#if logged_in}}
-            {{{name}}}| 
+            {{name}}|
             <a href="/login">Log out</a>
             {{else}}
             <a href="/login">Login</a>
@@ -56,12 +56,10 @@
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-
-  <!-- Load chat.js script -->
   <script src="/js/chat.js"></script>
-
-  <!-- Load app.js script -->
   <script src="/js/app.js"></script>
+  <script src="/js/createrooms.js"></script>
+
   {{/if}}
 </body>
 
