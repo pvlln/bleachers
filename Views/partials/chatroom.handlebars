@@ -1,22 +1,21 @@
 <row class="chatbox-title">
-  <h3>{{room.name}}</h3>
+  <h3 id="room-name-title">Inbox</h3>
+<button data-src="/views/rooms.handlebars" id="leaveroom" class="btn btn-outline-secondary" type="button">Leave Chat</button>
+<script>
+  document.getElementById('leaveroom').addEventListener('click', function() {
+    window.history.back();
+  });
+</script>
+
+</row>
+<row class="align-items-end" id="text">
+    {{!-- The messages will be appended here --}}
 </row>
 <row class="align-items-end">
-  {{! Messages received: }}
-  <div class="alert alert-success message reveived d-flex">
-    <p>{{message.sender}}: </p>
-    <p> {{message}}</p>
-  </div>
-  {{! Messages sent: }}
-  <div class="alert alert-info message sent justify-content-end d-flex">
-    <p>You: </p>
-    <p> {{message}}</p>
-  </div>
-</row>
-<row class="align-items-end">
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Enter message here" />
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Send</button>
+    <div class="input-group">
+        <input type="text" class="form-control" id="message-input" placeholder="Enter message here">
+        <div class="input-group-append">
+            <button id="submit" class="btn btn-outline-secondary" type="button">Send</button>
+        </div>
     </div>
-  </div>
+</row>

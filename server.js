@@ -25,7 +25,8 @@ const exphbs = require('express-handlebars');
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Public')));
+
 function isAuthenticated(req, res, next) {
   if (req.session.nickname) {
     next();
@@ -66,10 +67,7 @@ app.get('/signup', (req, res) => {
   res.render('signup', { logged_in: req.session.nickname ? true : false });
 });
 
-// signup route
-app.get('/signup', (req, res) => {
-  res.render('signup');
-});
+
 // login route
 app.get('/login', (req, res) => {
   res.render('login', { logged_in: req.session.nickname ? true : false });
@@ -127,11 +125,25 @@ io.on("connection", (socket) => {
   });
 });
 
+//Rooms function--------------
+
+const rooms = {}
+
+app.get('/', (req,res)=>{
+  res.render('index',{rooms: rooms});
+});
+
+app.get('/chatroom/:roomName', isAuthenticated, (req, res) => {
+  res.render('partials/chatroom', { logged_in: true, name: req.session.nickname, roomName: req.params.roomName });
+});
+
+
+
 http.listen(port, () => {
   console.log('Server is listening on', port);
 })
 
- 
+
 
 /*
   // Emit new-user event when a user connects
