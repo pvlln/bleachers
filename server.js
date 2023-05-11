@@ -129,9 +129,7 @@ io.on("connection", (socket) => {
 
 const rooms = {}
 
-app.get('/', (req,res)=>{
-  res.render('index',{rooms: rooms});
-});
+
 
 app.get('/chatroom/:roomName', isAuthenticated, (req, res) => {
   res.render('partials/chatroom', { logged_in: true, name: req.session.nickname, roomName: req.params.roomName });
@@ -145,31 +143,4 @@ http.listen(port, () => {
 
 
 
-/*
-  // Emit new-user event when a user connects
-  io.emit('new-user', socket.id);
-
-  // Join room event
-  socket.on('join-room', (roomName) => {
-    socket.join(roomName);
-    io.to(roomName).emit('message', socket.id + ' has joined the room: ' + roomName);
-  });
-
-  // Leave room event
-  socket.on('leave-room', (roomName) => {
-    socket.leave(roomName);
-    io.to(roomName).emit('message', socket.id + ' has left the room: ' + roomName);
-  });
-
-  
-    // Emit user-disconnected event when a user disconnects
-    io.emit('user-disconnected', socket.id);
-  });
-
-
-  // Receive messages and send them only to users in the same room
-  socket.on('message', (data) => {
-    io.to(data.room).emit('message', data.message, data.room);
-  });
-});*/
 
