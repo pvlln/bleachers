@@ -16,12 +16,12 @@ As a sports fan I want to login into a web app and create a chat room to talk ab
 
 ## Installation
 - We followed the documentation for Socket.io ("socket.io": "^4.6.1"): https://socket.io/docs/v4/
-- Users need to create a sql database before starting the server.
 - Users need to do an npm i before running the web app.
-- Users need to create their own .env file and include a "
+- Users need to create their own .env file and include a "SECRET_SESSION", "DB_NAME", DB_USER", "BD_PASSWORD".
 
 ## Future Developments
-
+We hope to bring users the most up to date sports information and live time match scores. We think this will greatly improve the user experience. Having a friends list and sending friend request is something that will
+help with user interaction.
 ## License
  ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
 This project is licensed under the MIT license. For more information on this licensing agreement, please go to the link below.
